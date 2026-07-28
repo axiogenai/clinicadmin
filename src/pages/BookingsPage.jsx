@@ -112,7 +112,8 @@ export default function BookingsPage() {
         </div>
       </div>
 
-      <div className="bg-white/70 backdrop-blur-md border border-white/80 shadow-lg shadow-black/5 rounded-xl overflow-hidden">
+      {/* Desktop Table View */}
+      <div className="hidden md:block bg-white/70 backdrop-blur-md border border-white/80 shadow-lg shadow-black/5 rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -210,6 +211,99 @@ export default function BookingsPage() {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Mobile Card List View */}
+      <div className="md:hidden space-y-4">
+        {filteredBookings.length > 0 ? (
+          filteredBookings.map((b) => {
+            const bStatus = (b.status || 'pending').toLowerCase();
+            const displayStatus = bStatus.charAt(0).toUpperCase() + bStatus.slice(1);
+            const bId = b.id || b._id;
+
+            return (
+              <div key={bId} className="bg-white/80 backdrop-blur-md border border-white/90 shadow-md rounded-2xl p-5 space-y-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="font-semibold text-[16px] text-[#1a1c1a]">{b.name}</h3>
+                    <p className="text-xs text-[#7c766d]">{b.phone} • {b.email}</p>
+                  </div>
+                  <span className={`px-2.5 py-1 text-xs font-semibold rounded-full border ${getStatusColor(bStatus)}`}>
+                    {displayStatus}
+                  </span>
+                </div>
+
+                <div className="bg-[#faf9f6] border border-[#cdc6ba]/30 rounded-xl p-3 space-y-2 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-[#7c766d]">Interest / Package:</span>
+                    <span className="font-medium text-[#1a1c1a]">{b.interest || 'General Consultation'}</span>
+                  </div>
+                  {b.doctor && (
+                    <div className="flex justify-between">
+                      <span className="text-[#7c766d]">Doctor Assigned:</span>
+                      <span className="font-semibold text-[#775a19]">{b.doctor}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between pt-1 border-t border-[#cdc6ba]/20">
+                    <span className="text-[#7c766d]">Scheduled Date:</span>
+                    <span className="font-medium text-[#1a1c1a]">
+                      {b.date ? new Date(b.date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' }) : 'Pending Scheduling'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-end gap-2 pt-1">
+                  {(bStatus === 'pending' || bStatus === 'pending scheduling') && (
+                    <>
+                      <button
+                        onClick={() => updateStatus(bId, 'confirmed')}
+                        className="flex-1 py-2 bg-emerald-600 text-white rounded-xl text-xs font-semibold shadow-sm text-center"
+                      >
+                        ✓ Confirm
+                      </button>
+                      <button
+                        onClick={() => updateStatus(bId, 'cancelled')}
+                        className="flex-1 py-2 bg-rose-50 text-rose-600 border border-rose-200 rounded-xl text-xs font-semibold text-center"
+                      >
+                        ✕ Cancel
+                      </button>
+                    </>
+                  )}
+
+                  {bStatus === 'confirmed' && (
+                    <>
+                      <button
+                        onClick={() => updateStatus(bId, 'completed')}
+                        className="flex-1 py-2 bg-blue-600 text-white rounded-xl text-xs font-semibold shadow-sm text-center"
+                      >
+                        ✓ Mark Complete
+                      </button>
+                      <button
+                        onClick={() => updateStatus(bId, 'cancelled')}
+                        className="flex-1 py-2 bg-rose-50 text-rose-600 border border-rose-200 rounded-xl text-xs font-semibold text-center"
+                      >
+                        ✕ Cancel
+                      </button>
+                    </>
+                  )}
+
+                  {(bStatus === 'completed' || bStatus === 'cancelled') && (
+                    <button
+                      onClick={() => updateStatus(bId, 'pending')}
+                      className="w-full py-2 bg-gray-100 text-gray-700 border border-gray-300 rounded-xl text-xs font-semibold text-center"
+                    >
+                      ↺ Re-open Booking
+                    </button>
+                  )}
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <div className="bg-white/80 rounded-2xl p-8 text-center text-[#7c766d] text-sm">
+            No bookings found.
+          </div>
+        )}
       </div>
     </div>
   );
