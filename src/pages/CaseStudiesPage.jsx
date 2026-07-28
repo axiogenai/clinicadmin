@@ -61,7 +61,7 @@ export default function CaseStudiesPage() {
     if (!window.confirm('Are you sure you want to delete this case study?')) return;
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3001/api/case-studies/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/case-studies/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -77,7 +77,7 @@ export default function CaseStudiesPage() {
       const token = localStorage.getItem('token');
       const method = editingCase ? 'PUT' : 'POST';
       const url = editingCase 
-        ? `http://localhost:3001/api/case-studies/${editingCase.id || editingCase._id}`
+        ? `${API_BASE_URL}/api/case-studies/${editingCase.id || editingCase._id}`
         : `${API_BASE_URL}/api/case-studies`;
 
       const res = await fetch(url, {

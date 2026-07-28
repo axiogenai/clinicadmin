@@ -31,7 +31,7 @@ export default function BookingsPage() {
   const updateStatus = async (id, status) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3001/api/bookings/${id}/status`, {
+      const res = await fetch(`${API_BASE_URL}/api/bookings/${id}/status`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

@@ -32,7 +32,7 @@ export default function CallbacksPage() {
   const resolveCallback = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3001/api/callbacks/${id}/resolve`, {
+      const res = await fetch(`${API_BASE_URL}/api/callbacks/${id}/resolve`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });

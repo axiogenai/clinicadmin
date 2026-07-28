@@ -58,7 +58,7 @@ export default function TreatmentsPage() {
     if (!window.confirm('Are you sure you want to delete this treatment?')) return;
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3001/api/treatments/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/treatments/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -74,7 +74,7 @@ export default function TreatmentsPage() {
       const token = localStorage.getItem('token');
       const method = editingTreatment ? 'PUT' : 'POST';
       const url = editingTreatment 
-        ? `http://localhost:3001/api/treatments/${editingTreatment.id || editingTreatment._id}`
+        ? `${API_BASE_URL}/api/treatments/${editingTreatment.id || editingTreatment._id}`
         : `${API_BASE_URL}/api/treatments`;
 
       const res = await fetch(url, {

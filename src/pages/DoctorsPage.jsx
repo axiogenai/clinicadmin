@@ -54,7 +54,7 @@ export default function DoctorsPage() {
     if (!window.confirm('Are you sure you want to delete this doctor profile?')) return;
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3001/api/doctors/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/doctors/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -70,7 +70,7 @@ export default function DoctorsPage() {
       const token = localStorage.getItem('token');
       const method = editingDoctor ? 'PUT' : 'POST';
       const url = editingDoctor 
-        ? `http://localhost:3001/api/doctors/${editingDoctor.id || editingDoctor._id}`
+        ? `${API_BASE_URL}/api/doctors/${editingDoctor.id || editingDoctor._id}`
         : `${API_BASE_URL}/api/doctors`;
 
       const payload = {
