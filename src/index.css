@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --font-serif: 'EB Garamond', serif;
+    --font-sans: 'DM Sans', sans-serif;
+    
+    --color-primary: #775a19;
+    --color-primary-dark: #5d4201;
+    --color-bg-light: #faf9f6;
+}
+
+body {
+    background: linear-gradient(to bottom right, #faf9f6, #f5f3ee, #ece8df);
+    color: #1a1c1a;
+    min-height: 100vh;
+}
+
+/* Custom scrollbar for light theme */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #cdc6ba;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #a39c8e;
+}
